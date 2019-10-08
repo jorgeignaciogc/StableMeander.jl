@@ -43,7 +43,7 @@ function rand(d::Stable) # Chambers. Mellows, and Stuck
     (cos(U) ^ (1/d.α) * cos(U - d.α * (U+(pi/2)*d.θ)) ^ (1-1/d.α))
 end
 
-function rand(d::Stable,n::Int) # Chambers. Mellows, and Stuck
+function rand(d::Stable,n::Integer) # Chambers. Mellows, and Stuck
   U = rand(Uniform(-pi/2,pi/2),n)
   return rand(Exponential(),n).^(1-1/d.α) .* sin.(d.α .* (U .+ (pi/2)*d.θ)) ./
     (cos.(U) .^ (1/d.α) .* cos.(U .- d.α .* (U .+ (pi/2)*d.θ)) .^ (1-1/d.α))
