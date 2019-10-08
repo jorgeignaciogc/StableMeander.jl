@@ -4,7 +4,7 @@ A Julia package for ε-strong simulation (εSS) of the stable meanders and relat
 
 * Stable - Stable random variable with parameters `(α,β)∈(0,2]×[-1,1]`.
 * PositiveStable - Stable random variable conditioned to be positive with parameters `(α,β)∈(0,2]×[-1,1]-(0,1]×{-1}`.
-* StableMeander - The marginal at time 1 of a normalised stable meander on `[0,1]` with parameters `α,β)∈(0,2]×[-1,1]-(0,1]×{-1}`.
+* StableMeander - The marginal at time `1` of a normalised stable meander on `[0,1]` with parameters `α,β)∈(0,2]×[-1,1]-(0,1]×{-1}`.
 * MvStableMeander - The finite dimensional distribution of a normalised normalised stable meander on `[0,t[m]]` at times `t[1],...,t[m]` with parameters `(α,β)∈(0,2]×[-1,1]-(0,1]×{-1}`, `0<t[1]<...<t[m]` and `m=length(t)`.
 * ConvexMinorantStableMeander - The largest convex function pointwise dominated by the path of a stable meander of parameters `(α,β)∈(0,2]×[-1,1]-(0,1]×{-1}`, over the interval `[0,1]`.
 * ConvexMinorantWeaklyStable - The largest convex function pointwise dominated by the path of a stable meander of parameters `(α,β)∈(0,2]×[-1,1]-(0,1]×{-1}`, scale `δ` and drift `μ` over the interval `[0,T]`.
@@ -419,6 +419,5 @@ rand_plot(ConvexMinorantWeaklyStable(α,β,δ,μ,T))
 Jorge I. González Cázares
 
 
-Aleksandar Mijatović 
-
+Aleksandar Mijatović  
 Gerónimo Uribe Bravo
