@@ -2,12 +2,12 @@
 
 A Julia package for ε-strong simulation (εSS) of the stable meanders and related distributions. It supports a few methods and an auxiliary distribution (see below for details). Specifically, this package includes the following distributions (using Zolotarev's (C) form of parametrization):
 
-* Stable - Stable random variable with parameters (α,β)∈(0,2]×[-1,1].
-* PositiveStable - Stable random variable conditioned to be positive with parameters (α,β)∈(0,2]×[-1,1]-(0,1]×{-1}.
+* Stable - Stable random variable with parameters `(α,β)∈(0,2]×[-1,1]`.
+* PositiveStable - Stable random variable conditioned to be positive with parameters `(α,β)∈(0,2]×[-1,1]-(0,1]×{-1}`.
 * StableMeander - The marginal at time 1 of a normalised stable meander on `[0,1]` with parameters (α,β)∈(0,2]×[-1,1]-(0,1]×{-1}.
-* MvStableMeander - The finite dimensional distribution of a normalised normalised stable meander on `[0,t[m]]` at times `t[1],...,t[m]` with parameters (α,β)∈(0,2]×[-1,1]-(0,1]×{-1}, `0<t[1]<...<t[m]` and `m=length(t)`.
-* ConvexMinorantStableMeander - The largest convex function pointwise dominated by the path of a stable meander of parameters (α,β)∈(0,2]×[-1,1]-(0,1]×{-1}, over the interval `[0,1]`.
-* ConvexMinorantWeaklyStable - The largest convex function pointwise dominated by the path of a stable meander of parameters (α,β)∈(0,2]×[-1,1]-(0,1]×{-1}, scale `δ` and drift `μ` over the interval `[0,T]`.
+* MvStableMeander - The finite dimensional distribution of a normalised normalised stable meander on `[0,t[m]]` at times `t[1],...,t[m]` with parameters `(α,β)∈(0,2]×[-1,1]-(0,1]×{-1}`, `0<t[1]<...<t[m]` and `m=length(t)`.
+* ConvexMinorantStableMeander - The largest convex function pointwise dominated by the path of a stable meander of parameters `(α,β)∈(0,2]×[-1,1]-(0,1]×{-1}`, over the interval `[0,1]`.
+* ConvexMinorantWeaklyStable - The largest convex function pointwise dominated by the path of a stable meander of parameters `(α,β)∈(0,2]×[-1,1]-(0,1]×{-1}`, scale `δ` and drift `μ` over the interval `[0,T]`.
 
 
 ## Table of Contents
@@ -28,7 +28,7 @@ The distributions included support most of the standard functions as outlined in
 ```julia
 Stable <: ContinuousUnivariateDistribution
 ```
-This type has a single standard constructor `Stable(α::Real,β::Real)` with parameters (α,β)∈(0,2]×[-1,1]-(0,1]×{-1} and supports the methods `minimum`, `maximum`, `insupport`, `pdf`, `cdf`, `cf`, `mgf`, `mean`, `var`, `mellin`, `params` and `rand`.
+This type has a single standard constructor `Stable(α::Real,β::Real)` with parameters `(α,β)∈(0,2]×[-1,1]-(0,1]×{-1}` and supports the methods `minimum`, `maximum`, `insupport`, `pdf`, `cdf`, `cf`, `mgf`, `mean`, `var`, `mellin`, `params` and `rand`.
 
 #### Remarks
 
@@ -43,7 +43,7 @@ This type has a single standard constructor `Stable(α::Real,β::Real)` with par
 ```julia
 PositiveStable <: ContinuousUnivariateDistribution
 ```
-This type has a single standard constructor `PositiveStable(α::Real,β::Real)` with parameters (α,β)∈(0,2]×[-1,1]-(0,1]×{-1} and supports the methods `minimum`, `maximum`, `insupport`, `pdf`, `cdf`, `cf`, `mgf`, `mean`, `var`, `mellin`, `params` and `rand`.
+This type has a single standard constructor `PositiveStable(α::Real,β::Real)` with parameters `(α,β)∈(0,2]×[-1,1]-(0,1]×{-1}` and supports the methods `minimum`, `maximum`, `insupport`, `pdf`, `cdf`, `cf`, `mgf`, `mean`, `var`, `mellin`, `params` and `rand`.
 
 #### Remarks
 
@@ -56,7 +56,7 @@ This type has a single standard constructor `PositiveStable(α::Real,β::Real)` 
 ```julia
 StableMeander <: ContinuousUnivariateDistribution
 ```
-This type has a single standard constructor `StableMeander(α::Real,β::Real)` with parameters (α,β)∈(0,2]×[-1,1]-(0,1]×{-1} and supports the methods `minimum`, `maximum`, `insupport`, `mean`, `params`, `rand` and two samplers `precise_sampler` and `local_sampler`.
+This type has a single standard constructor `StableMeander(α::Real,β::Real)` with parameters `(α,β)∈(0,2]×[-1,1]-(0,1]×{-1}` and supports the methods `minimum`, `maximum`, `insupport`, `mean`, `params`, `rand` and two samplers `precise_sampler` and `local_sampler`.
 
 #### Remarks
 
@@ -108,7 +108,7 @@ The output of `rand` is a tuple `(f(x),x,x+err,s)`, where the true random variab
 ```julia
 MvStableMeander <: ContinuousMultivariateDistribution
 ```
-This type has a single standard constructor `MvStableMeander(α::Real,β::Real,t::Array{Real,1})` with parameters (α,β)∈(0,2]×[-1,1]-(0,1]×{-1} and `0<t[1]<...<t[m]`, where `m=length(t)`. This type supports the methods `insupport`, `params`, `rand` and two samplers `precise_sampler` and `local_sampler`.
+This type has a single standard constructor `MvStableMeander(α::Real,β::Real,t::Array{Real,1})` with parameters `(α,β)∈(0,2]×[-1,1]-(0,1]×{-1}` and `0<t[1]<...<t[m]`, where `m=length(t)`. This type supports the methods `insupport`, `params`, `rand` and two samplers `precise_sampler` and `local_sampler`.
 
 #### Remarks
 
@@ -233,7 +233,7 @@ The output of `rand` is a tuple `(bool,df,err_l,err_r,s)` satisfying the followi
 ### StableMeander, MvStableMeander, ConvexMinorantStableMeander, ConvexMinorantWeaklyStable
 These distributions' implementations rely on a recent paper by the authors of the package. See the article for details at: 
 Jorge González Cázares and Aleksandar Mijatović and Gerónimo Uribe Bravo, *ε-strong simulation of the convex minorants of stable processes and meanders*, [arXiv:...](https://arxiv.org/abs/...) (2019). In this reference, the variables `Δ` and `mAst` are denoted <a href="https://www.codecogs.com/eqnedit.php?latex=m" target="_blank"><img src="https://latex.codecogs.com/gif.latex?m" title="m" /></a> and <a href="https://www.codecogs.com/eqnedit.php?latex=m^*" target="_blank"><img src="https://latex.codecogs.com/gif.latex?m^*" title="m^*" /></a>, respectively.
-Throughout the paper, the authors work on the parameters (α,ρ) where ρ is the positivity parameter (i.e. the probability that `rand(Stable(α,β))` is positive) and can be computed from (α,β) (see Appendix A in the reference).
+Throughout the paper, the authors work on the parameters `(α,ρ)` where `ρ` is the positivity parameter (i.e. the probability that `rand(Stable(α,β))` is positive) and can be computed from `(α,β)` (see Appendix A in the reference).
 
 
 <a name="examples"/>
