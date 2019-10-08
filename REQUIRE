@@ -1,0 +1,7 @@
+julia 1.0
+Distributions v0.21.1
+FastGaussQuadrature v0.3.3
+SpecialFunctions v0.7.2
+LambertW v0.4.3
+DataFrames v0.19.2
+DataFramesMeta v0.5.0
