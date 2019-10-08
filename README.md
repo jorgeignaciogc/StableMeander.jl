@@ -60,7 +60,7 @@ This type has a single standard constructor `StableMeander(α::Real,β::Real)` w
 
 #### Remarks
 
-* Method `params(d::StableMeander)` returns the tuple (α,β,θ,ρ) following Zolotarev's (C) form.
+* Method `params(d::StableMeander)` returns the tuple `(α,β,θ,ρ)` following Zolotarev's (C) form.
 * If `β=1` and `α<1`, constructor automatically defaults to `Stable(α,1)` since they agree.
 * `precise_sampler(d::StableMeander)` returns a subtype [Sampler](https://juliastats.github.io/Distributions.jl/stable/extends.html) of sub type `PreciseStableMeander`. The optional arguments in `precise_sampler(d::StableMeander,args...)` are as in the constructor below of `PreciseStableMeander` below.
 * `local_sampler(d::StableMeander,...)` returns a subtype [Sampler](https://juliastats.github.io/Distributions.jl/stable/extends.html) of sub type `LocStableMeander`. The optional arguments in `local_sampler(d::StableMeander,args...)` are as in the constructor below of `LocStableMeander` below.
