@@ -44,7 +44,7 @@ module StableMeander
 
   include("stable.jl")
   include("positivestable.jl")
-  include("stablemeander.jl")
+  include("fdstablemeander.jl")
   include("convexminorantstable.jl")
 
 end
