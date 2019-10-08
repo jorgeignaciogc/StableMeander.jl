@@ -40,7 +40,7 @@ struct ConvexMinorantStableMeander <: Distribution{Multivariate,Continuous}
   Δ::Int64
   mAst::Int64
   ε::Float64
-  ConvexMinorantStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Int,mAst::Int,ε::Float64) =
+  ConvexMinorantStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Integer,mAst::Integer,ε::Float64) =
     (β < -1 || β > 1 || (β == -1 && α <= 1) || α <= 0 || α > 2) ?
     error("Parameters' requirements unmet: (α,β)∈(0,2]×[-1,1]-(0,1]×{-1}") : (0 >= γ || γ >= α) ?
     error("Parameters' requirements unmet: α>γ>0") : (0 >= δ || δ >= d || d >= 2/(α + β*(α <= 1 ? α : α-2))) ?
@@ -51,8 +51,8 @@ struct ConvexMinorantStableMeander <: Distribution{Multivariate,Continuous}
     error("Parameters' requirements unmet: ε>0") : new(α, β, β*(α <= 1 ? 1 : (α-2)/α),(1+β*(α <= 1 ? 1 : (α-2)/α))/2 , d,
       etaF(d*(α + β*(α <= 1 ? α : α-2))/2)*(α + β*(α <= 1 ? α : α-2))/2 , δ, γ, κ + Int(ceil(max(2/(α+β*(α <= 1 ? α : α-2)),
       log(2)*2/(3*etaF(d*(α+β*(α <= 1 ? α : α-2))/2)*(α+β*(α <= 1 ? α : α-2)) ) ))), Δ, mAst, ε)
-  ConvexMinorantStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Int,mAst::Int) = ConvexMinorantStableMeander(α,β,d,δ,γ,κ,Δ,mAst,.5^16)
-  ConvexMinorantStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Int) = ConvexMinorantStableMeander(α,β,d,δ,γ,κ,Δ,12)
+  ConvexMinorantStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Integer,mAst::Integer) = ConvexMinorantStableMeander(α,β,d,δ,γ,κ,Δ,mAst,.5^16)
+  ConvexMinorantStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Integer) = ConvexMinorantStableMeander(α,β,d,δ,γ,κ,Δ,12)
   ConvexMinorantStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real) = ConvexMinorantStableMeander(α,β,d,δ,γ,κ,
     Int(ceil(17*log(2)/log(gamma(1+1/α+(1+β*(α <= 1 ? 1 : (α-2)/α))/2)/(gamma(1+1/α)*gamma(1+(1+β*(α <= 1 ? 1 : (α-2)/α))/2))))))
   ConvexMinorantStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real) = ConvexMinorantStableMeander(α,β,d,δ,γ,4)
@@ -240,7 +240,7 @@ struct CrossConvexMinorantStableMeander <: Distribution{Multivariate,Continuous}
   Δ::Int64
   mAst::Int64
   f::Function
-  CrossConvexMinorantStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Int,mAst::Int,f::Function) =
+  CrossConvexMinorantStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Integer,mAst::Integer,f::Function) =
     (β < -1 || β > 1 || (β == -1 && α <= 1) || α <= 0 || α > 2) ?
     error("Parameters' requirements unmet: (α,β)∈(0,2]×[-1,1]-(0,1]×{-1}") : (0 >= γ || γ >= α) ?
     error("Parameters' requirements unmet: α>γ>0") : (0 >= δ || δ >= d || d >= 2/(α + β*(α <= 1 ? α : α-2))) ?
@@ -250,7 +250,7 @@ struct CrossConvexMinorantStableMeander <: Distribution{Multivariate,Continuous}
     error("Parameters' requirements unmet: m*≥0") : new(α, β, β*(α <= 1 ? 1 : (α-2)/α),(1+β*(α <= 1 ? 1 : (α-2)/α))/2 , d,
       etaF(d*(α + β*(α <= 1 ? α : α-2))/2)*(α + β*(α <= 1 ? α : α-2))/2 , δ, γ, κ + Int(ceil(max(2/(α+β*(α <= 1 ? α : α-2)),
       log(2)*2/(3*etaF(d*(α+β*(α <= 1 ? α : α-2))/2)*(α+β*(α <= 1 ? α : α-2)) ) ))), Δ, mAst, cross_func(f))
-  CrossConvexMinorantStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Int,f::Function) = CrossConvexMinorantStableMeander(α,β,d,δ,γ,κ,Δ,12,f)
+  CrossConvexMinorantStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Integer,f::Function) = CrossConvexMinorantStableMeander(α,β,d,δ,γ,κ,Δ,12,f)
   CrossConvexMinorantStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,f::Function) = CrossConvexMinorantStableMeander(α,β,d,δ,γ,κ,
     Int(ceil(33*log(2)/log(gamma(1+1/α+(1+β*(α <= 1 ? 1 : (α-2)/α))/2)/(gamma(1+1/α)*gamma(1+(1+β*(α <= 1 ? 1 : (α-2)/α))/2))))),f)
   CrossConvexMinorantStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,f::Function) = CrossConvexMinorantStableMeander(α,β,d,δ,γ,4,f)
@@ -426,7 +426,7 @@ struct ConvexMinorantWeaklyStable <: Distribution{Multivariate,Continuous}
   mAst_l::Int64
   mAst_r::Int64
   ε::Float64
-  ConvexMinorantWeaklyStable(α::Real,β::Real,δ::Real,μ::Real,T::Real,d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Int,Δ_r::Int,mAst_l::Int,mAst_r::Int,ε::Float64) =
+  ConvexMinorantWeaklyStable(α::Real,β::Real,δ::Real,μ::Real,T::Real,d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Integer,Δ_r::Integer,mAst_l::Integer,mAst_r::Integer,ε::Float64) =
     (β < -1 || β > 1 || α <= 0 || α > 2) ?
     error("Parameters' requirements unmet: (α,β)∈(0,2]×[-1,1]") :
     (δ <= 0) ?
@@ -461,8 +461,8 @@ struct ConvexMinorantWeaklyStable <: Distribution{Multivariate,Continuous}
       κ_l + Int(ceil(max(2/(α-β*(α <= 1 ? α : α-2)),log(2)*2/(3*etaF(d_l*(α-β*(α <= 1 ? α : α-2))/2)*(α-β*(α <= 1 ? α : α-2)) ) ))),
       κ_r + Int(ceil(max(2/(α+β*(α <= 1 ? α : α-2)),log(2)*2/(3*etaF(d_r*(α+β*(α <= 1 ? α : α-2))/2)*(α+β*(α <= 1 ? α : α-2)) ) ))),
       Δ_l, Δ_r, mAst_l, mAst_r, ε)
-  ConvexMinorantWeaklyStable(α::Real,β::Real,δ::Real,μ::Real,T::Real,d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Int,Δ_r::Int,mAst_l::Int,mAst_r::Int) = ConvexMinorantWeaklyStable(α,β,δ,μ,T,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,Δ_l,Δ_r,mAst_l,mAst_r,.5^16)
-  ConvexMinorantWeaklyStable(α::Real,β::Real,δ::Real,μ::Real,T::Real,d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Int,Δ_r::Int) = ConvexMinorantWeaklyStable(α,β,δ,μ,T,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,Δ_l,Δ_r,12,12)
+  ConvexMinorantWeaklyStable(α::Real,β::Real,δ::Real,μ::Real,T::Real,d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Integer,Δ_r::Integer,mAst_l::Integer,mAst_r::Integer) = ConvexMinorantWeaklyStable(α,β,δ,μ,T,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,Δ_l,Δ_r,mAst_l,mAst_r,.5^16)
+  ConvexMinorantWeaklyStable(α::Real,β::Real,δ::Real,μ::Real,T::Real,d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Integer,Δ_r::Integer) = ConvexMinorantWeaklyStable(α,β,δ,μ,T,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,Δ_l,Δ_r,12,12)
   ConvexMinorantWeaklyStable(α::Real,β::Real,δ::Real,μ::Real,T::Real,d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real) = ConvexMinorantWeaklyStable(α,β,δ,μ,T,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,
     Int(ceil(17*log(2)/log(gamma(1+1/α+(1-β*(α <= 1 ? 1 : (α-2)/α))/2)/(gamma(1+1/α)*gamma(1+(1-β*(α <= 1 ? 1 : (α-2)/α))/2))))),
     Int(ceil(17*log(2)/log(gamma(1+1/α+(1+β*(α <= 1 ? 1 : (α-2)/α))/2)/(gamma(1+1/α)*gamma(1+(1+β*(α <= 1 ? 1 : (α-2)/α))/2))))))
@@ -750,7 +750,7 @@ struct CrossConvexMinorantWeaklyStable <: Distribution{Multivariate,Continuous}
   mAst_l::Int64
   mAst_r::Int64
   f::Function
-  CrossConvexMinorantWeaklyStable(α::Real,β::Real,δ::Real,μ::Real,T::Real,d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Int,Δ_r::Int,mAst_l::Int,mAst_r::Int,f::Function) =
+  CrossConvexMinorantWeaklyStable(α::Real,β::Real,δ::Real,μ::Real,T::Real,d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Integer,Δ_r::Integer,mAst_l::Integer,mAst_r::Integer,f::Function) =
     (β < -1 || β > 1 || α <= 0 || α > 2) ?
     error("Parameters' requirements unmet: (α,β)∈(0,2]×[-1,1]") :
     (δ <= 0) ?
@@ -782,7 +782,7 @@ struct CrossConvexMinorantWeaklyStable <: Distribution{Multivariate,Continuous}
       κ_l + Int(ceil(max(2/(α-β*(α <= 1 ? α : α-2)),log(2)*2/(3*etaF(d_l*(α-β*(α <= 1 ? α : α-2))/2)*(α-β*(α <= 1 ? α : α-2)) ) ))),
       κ_r + Int(ceil(max(2/(α+β*(α <= 1 ? α : α-2)),log(2)*2/(3*etaF(d_r*(α+β*(α <= 1 ? α : α-2))/2)*(α+β*(α <= 1 ? α : α-2)) ) ))),
       Δ_l, Δ_r, mAst_l, mAst_r, f)
-  CrossConvexMinorantWeaklyStable(α::Real,β::Real,δ::Real,μ::Real,T::Real,d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Int,Δ_r::Int,f::Function) = CrossConvexMinorantWeaklyStable(α,β,δ,μ,T,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,Δ_l,Δ_r,12,12,f)
+  CrossConvexMinorantWeaklyStable(α::Real,β::Real,δ::Real,μ::Real,T::Real,d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Integer,Δ_r::Integer,f::Function) = CrossConvexMinorantWeaklyStable(α,β,δ,μ,T,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,Δ_l,Δ_r,12,12,f)
   CrossConvexMinorantWeaklyStable(α::Real,β::Real,δ::Real,μ::Real,T::Real,d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,f::Function) = CrossConvexMinorantWeaklyStable(α,β,δ,μ,T,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,
     Int(ceil(17*log(2)/log(gamma(1+1/α+(1-β*(α <= 1 ? 1 : (α-2)/α))/2)/(gamma(1+1/α)*gamma(1+(1-β*(α <= 1 ? 1 : (α-2)/α))/2))))),
     Int(ceil(17*log(2)/log(gamma(1+1/α+(1+β*(α <= 1 ? 1 : (α-2)/α))/2)/(gamma(1+1/α)*gamma(1+(1+β*(α <= 1 ? 1 : (α-2)/α))/2))))),f)
