@@ -1,5 +1,5 @@
 # StableMeander.jl
-===
+
 A Julia package for ε-strong simulation (εSS) of the stable meanders and related distributions. It supports a few methods and an auxiliary distribution (see below for details). Specifically, this package includes the following distributions (using Zolotarev's (C) form of parametrization):
 <ul>
 <li>Stable - Stable random variable with parameters (α,β)∈(0,2]×[-1,1].</li>
@@ -9,19 +9,19 @@ A Julia package for ε-strong simulation (εSS) of the stable meanders and relat
 </ul>
 
 ## Table of Contents
-===
-[Schema](#schema) 
-[Remarks and References](#references)
-[Examples](#examples)
-[Author and Contributor List](#authors)
+
+1. [Schema](#schema) 
+2. [Remarks and References](#references)
+3. [Examples](#examples)
+4. [Author and Contributor List](#authors)
 
 <a name="schema"/>
 ## Schema
-===
+
 The distributions included support most of the standard functions as outlined in [Distributions.jl](https://github.com/JuliaStats/Distributions.jl).
 
 ### Stable - _Type_
-===
+
 ```julia
 Stable <: ContinuousUnivariateDistribution
 ```
@@ -36,7 +36,7 @@ This type has a single standard constructor `Stable(α::Real,β::Real)` with par
 </ul>
 
 ### PositiveStable - _Type_
-===
+
 ```julia
 PositiveStable <: ContinuousUnivariateDistribution
 ```
@@ -50,7 +50,7 @@ This type has a single standard constructor `PositiveStable(α::Real,β::Real)` 
 </ul>
 
 ### StableMeander - _Type_
-===
+
 ```julia
 StableMeander <: ContinuousUnivariateDistribution
 ```
@@ -66,7 +66,7 @@ This type has a single standard constructor `StableMeander(α::Real,β::Real)` w
 </ul>
 
 ### PreciseStableMeander - _Type_
-===
+
 ```
 PreciseStableMeander <: Sampleable{Multivariate,Continuous}
 ```
@@ -83,7 +83,7 @@ This is a sub type for arbitrarily precise samples of `StableMeander` through _�
 </ul>
 
 ### LocStableMeander - _Type_
-===
+
 ```
 LocStableMeander <: Sampleable{Multivariate,Continuous}
 ```
@@ -98,7 +98,7 @@ This is a sub type for sampling `f(X)` where `X` has distribution `StableMeander
 </ul>
 
 ### MvStableMeander - _Type_
-===
+
 ```julia
 MvStableMeander <: ContinuousMultivariateDistribution
 ```
@@ -113,7 +113,7 @@ This type has a single standard constructor `MvStableMeander(α::Real,β::Real,t
 </ul>
 
 ### PreciseMvStableMeander - _Type_
-===
+
 ```
 PreciseMvStableMeander <: Sampleable{Multivariate,Continuous}
 ```
@@ -130,7 +130,7 @@ This is an auxiliary sub type for arbitrarily precise samples of `MvStableMeande
 </ul>
 
 ### LocMvStableMeander - _Type_
-===
+
 ```
 LocMvStableMeander <: Sampleable{Multivariate,Continuous}
 ```
@@ -145,7 +145,7 @@ This is a sub type for sampling `f(X)` where `X` has distribution `MvStableMeand
 </ul>
 
 ### ConvexMinorantStableMeander - _Type_
-===
+
 ```julia
 ConvexMinorantStableMeander <: ContinuousMultivariateDistribution
 ```
@@ -162,7 +162,7 @@ This type represents the inifinite-dimensional random element `C` defined as the
 </ul>
 
 ### CrossConvexMinorantStableMeander - _Type_
-===
+
 ```julia
 CrossConvexMinorantStableMeander <: ContinuousMultivariateDistribution
 ```
@@ -177,7 +177,7 @@ This type represents the inifinite-dimensional random element `C` defined as the
 </ul>
 
 ### ConvexMinorantWeaklyStable - _Type_
-===
+
 ```julia
 ConvexMinorantWeaklyStable <: ContinuousMultivariateDistribution
 ```
@@ -194,7 +194,7 @@ This type represents the inifinite-dimensional random element `C` defined as the
 </ul>
 
 ### CrossConvexMinorantWeaklyStable - _Type_
-===
+
 ```julia
 CrossConvexMinorantWeaklyStable <: ContinuousMultivariateDistribution
 ```
@@ -211,7 +211,7 @@ This type represents the inifinite-dimensional random element `C` defined as the
 
 <a name="references"/>
 ## Remarks and References
-===
+
 ### StableMeander, MvStableMeander, ConvexMinorantStableMeander, ConvexMinorantWeaklyStable
 These distributions' implementations rely on a recent paper by the authors of the package. See the article for details at: 
 Jorge González Cázares and Aleksandar Mijatović and Gerónimo Uribe Bravo, *ε-strong simulation of the convex minorants of stable processes and meanders*, [arXiv:...](https://arxiv.org/abs/...) (2019). In this reference, the variables `Δ` and `mAst` are denoted <a href="https://www.codecogs.com/eqnedit.php?latex=m" target="_blank"><img src="https://latex.codecogs.com/gif.latex?m" title="m" /></a> and <a href="https://www.codecogs.com/eqnedit.php?latex=m^*" target="_blank"><img src="https://latex.codecogs.com/gif.latex?m^*" title="m^*" /></a>, respectively.
