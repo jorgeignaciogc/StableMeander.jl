@@ -4,7 +4,7 @@ A Julia package for ε-strong simulation (εSS) of the stable meanders and relat
 
 * Stable - Stable random variable with parameters `(α,β)∈(0,2]×[-1,1]`.
 * PositiveStable - Stable random variable conditioned to be positive with parameters `(α,β)∈(0,2]×[-1,1]-(0,1]×{-1}`.
-* StableMeander - The marginal at time 1 of a normalised stable meander on `[0,1]` with parameters (α,β)∈(0,2]×[-1,1]-(0,1]×{-1}.
+* StableMeander - The marginal at time 1 of a normalised stable meander on `[0,1]` with parameters `α,β)∈(0,2]×[-1,1]-(0,1]×{-1}`.
 * MvStableMeander - The finite dimensional distribution of a normalised normalised stable meander on `[0,t[m]]` at times `t[1],...,t[m]` with parameters `(α,β)∈(0,2]×[-1,1]-(0,1]×{-1}`, `0<t[1]<...<t[m]` and `m=length(t)`.
 * ConvexMinorantStableMeander - The largest convex function pointwise dominated by the path of a stable meander of parameters `(α,β)∈(0,2]×[-1,1]-(0,1]×{-1}`, over the interval `[0,1]`.
 * ConvexMinorantWeaklyStable - The largest convex function pointwise dominated by the path of a stable meander of parameters `(α,β)∈(0,2]×[-1,1]-(0,1]×{-1}`, scale `δ` and drift `μ` over the interval `[0,T]`.
@@ -32,7 +32,7 @@ This type has a single standard constructor `Stable(α::Real,β::Real)` with par
 
 #### Remarks
 
-* Method `params(d::Stable)` returns the tuple (α,β,θ,ρ) following Zolotarev's (C) form (i.e.,
+* Method `params(d::Stable)` returns the tuple `(α,β,θ,ρ)` following Zolotarev's (C) form (i.e.,
 `ρ=1-cdf(d,0)` and `θ=2*ρ-1`).
 * Method `mellin(d::PositiveStable,X::T)` returns the [Mellin transform](https://en.wikipedia.org/wiki/Mellin_transform), where `T` is either `F` or `AbstractArray{F}` and `F` is either`Real` or `Complex`.
 * Method `rand(d::Stable)` is based on [Chambers-Mellows-Stuck algorithm](https://en.wikipedia.org/wiki/Stable_distribution#Simulation_of_stable_variables).
@@ -112,7 +112,7 @@ This type has a single standard constructor `MvStableMeander(α::Real,β::Real,t
 
 #### Remarks
 
-* Method `params(d::MvStableMeander)` returns the tuple (α,β,θ,ρ,t) following Zolotarev's (C) form.
+* Method `params(d::MvStableMeander)` returns the tuple `(α,β,θ,ρ,t)` following Zolotarev's (C) form.
 * `precise_sampler(d::StableMeander)` returns a subtype [Sampler](https://juliastats.github.io/Distributions.jl/stable/extends.html) of sub type `PreciseMvStableMeander`. The optional arguments in `precise_sampler(d::MvStableMeander,args...)` are as in the constructor below of `PreciseMvStableMeander` below.
 * `local_sampler(d::StableMeander,...)` returns a subtype [Sampler](https://juliastats.github.io/Distributions.jl/stable/extends.html) of sub type `LocMvStableMeander`. The optional arguments in `local_sampler(d::MvStableMeander,args...)` are as in the constructor below of `LocMvStableMeander` below.
 * `rand(d::MvStableMeander)` calls `rand(precise_sampler(d))[1]`.
@@ -420,4 +420,5 @@ Jorge I. González Cázares
 
 
 Aleksandar Mijatović 
+
 Gerónimo Uribe Bravo
