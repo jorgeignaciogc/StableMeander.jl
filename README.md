@@ -32,7 +32,7 @@ This type has a single standard constructor `Stable(α::Real,β::Real)` with par
 
 * Method `params(d::Stable)` returns the tuple (α,β,θ,ρ) following Zolotarev's (C) form (i.e.,
 `ρ=1-cdf(d,0)` and `θ=2*ρ-1`).
-* Method `mellin(d::PositiveStable,X::T)` returns the [Mellin transform](https://en.wikipedia.org/wiki/Mellin_transform), where `T` is either `F` or `AbstractArray{F}` and where `F` is either`Real` or `Complex`.
+* Method `mellin(d::PositiveStable,X::T)` returns the [Mellin transform](https://en.wikipedia.org/wiki/Mellin_transform), where `T` is either `F` or `AbstractArray{F}` and `F` is either`Real` or `Complex`.
 * Method `rand(d::Stable)` is based on [Chambers-Mellows-Stuck algorithm](https://en.wikipedia.org/wiki/Stable_distribution#Simulation_of_stable_variables).
 
 
