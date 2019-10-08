@@ -49,7 +49,7 @@ struct PreciseStableMeander <: Sampleable{Multivariate,Continuous}
   Δ::Int64
   mAst::Int64
   ε::Float64
-  PreciseStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Int,mAst::Int,ε::Float64) =
+  PreciseStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Integer,mAst::Integer,ε::Float64) =
     (β < -1 || β > 1 || (β == -1 && α <= 1) || α <= 0 || α > 2) ?
     error("Parameters' requirements unmet: (α,β)∈(0,2]×[-1,1]-(0,1]×{-1}") : (0 >= γ || γ >= α) ?
     error("Parameters' requirements unmet: α>γ>0") : (0 >= δ || δ >= d || d >= 2/(α + β*(α <= 1 ? α : α-2))) ?
@@ -60,8 +60,8 @@ struct PreciseStableMeander <: Sampleable{Multivariate,Continuous}
     error("Parameters' requirements unmet: ε>0") : new(α, β, β*(α <= 1 ? 1 : (α-2)/α),(1+β*(α <= 1 ? 1 : (α-2)/α))/2 , d,
       etaF(d*(α + β*(α <= 1 ? α : α-2))/2)*(α + β*(α <= 1 ? α : α-2))/2 , δ, γ, κ + Int(ceil(max(2/(α+β*(α <= 1 ? α : α-2)),
       log(2)*2/(3*etaF(d*(α+β*(α <= 1 ? α : α-2))/2)*(α+β*(α <= 1 ? α : α-2)) ) ))), Δ, mAst, ε)
-  PreciseStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Int,mAst::Int) = PreciseStableMeander(α,β,d,δ,γ,κ,Δ,mAst,.5^32)
-  PreciseStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Int) = PreciseStableMeander(α,β,d,δ,γ,κ,Δ,12)
+  PreciseStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Integer,mAst::Integer) = PreciseStableMeander(α,β,d,δ,γ,κ,Δ,mAst,.5^32)
+  PreciseStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Integer) = PreciseStableMeander(α,β,d,δ,γ,κ,Δ,12)
   PreciseStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real) = PreciseStableMeander(α,β,d,δ,γ,κ,
     Int(ceil(33*log(2)/log(gamma(1+1/α+(1+β*(α <= 1 ? 1 : (α-2)/α))/2)/(gamma(1+1/α)*gamma(1+(1+β*(α <= 1 ? 1 : (α-2)/α))/2))))))
   PreciseStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real) = PreciseStableMeander(α,β,d,δ,γ,4)
@@ -71,15 +71,15 @@ struct PreciseStableMeander <: Sampleable{Multivariate,Continuous}
     Int(ceil(abs(log(ε/2))/log(gamma(1+1/α+(1+β*(α <= 1 ? 1 : (α-2)/α))/2)/(gamma(1+1/α)*gamma(1+(1+β*(α <= 1 ? 1 : (α-2)/α))/2))))),ε)
 end
 
-function precise_sampler(d::StableMeander,dr::Real,δ::Real,γ::Real,κ::Real,Δ::Int,mAst::Int,ε::Real)
+function precise_sampler(d::StableMeander,dr::Real,δ::Real,γ::Real,κ::Real,Δ::Integer,mAst::Integer,ε::Real)
   return PreciseStableMeander(d.α,d.β,dr,δ,γ,κ,Δ,mAst,ε)
 end
 
-function precise_sampler(d::StableMeander,dr::Real,δ::Real,γ::Real,κ::Real,Δ::Int,mAst::Int)
+function precise_sampler(d::StableMeander,dr::Real,δ::Real,γ::Real,κ::Real,Δ::Integer,mAst::Integer)
   return PreciseStableMeander(d.α,d.β,dr,δ,γ,κ,Δ,mAst)
 end
 
-function precise_sampler(d::StableMeander,dr::Real,δ::Real,γ::Real,κ::Real,Δ::Int)
+function precise_sampler(d::StableMeander,dr::Real,δ::Real,γ::Real,κ::Real,Δ::Integer)
   return PreciseStableMeander(d.α,d.β,dr,δ,γ,κ,Δ)
 end
 
@@ -442,7 +442,7 @@ function rand(d::StableMeander)
   return rand(precise_sampler(d))[1]
 end
 
-function rand(d::StableMeander,N::Int)
+function rand(d::StableMeander,N::Integer)
   return [rand(d) for i =1:N]
 end
 
@@ -465,7 +465,7 @@ struct LocStableMeander <: Distribution{Multivariate,Continuous}
   Δ::Int64
   mAst::Int64
   f::Function
-  LocStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Int,mAst::Int,f::Function) =
+  LocStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Integer,mAst::Integer,f::Function) =
     (β < -1 || β > 1 || (β == -1 && α <= 1) || α <= 0 || α > 2) ?
     error("Parameters' requirements unmet: (α,β)∈(0,2]×[-1,1]-(0,1]×{-1}") : (0 >= γ || γ >= α) ?
     error("Parameters' requirements unmet: α>γ>0") : (0 >= δ || δ >= d || d >= 2/(α + β*(α <= 1 ? α : α-2))) ?
@@ -475,7 +475,7 @@ struct LocStableMeander <: Distribution{Multivariate,Continuous}
     error("Parameters' requirements unmet: m*≥0") : new(α, β, β*(α <= 1 ? 1 : (α-2)/α),(1+β*(α <= 1 ? 1 : (α-2)/α))/2 , d,
       etaF(d*(α + β*(α <= 1 ? α : α-2))/2)*(α + β*(α <= 1 ? α : α-2))/2 , δ, γ, κ + Int(ceil(max(2/(α+β*(α <= 1 ? α : α-2)),
       log(2)*2/(3*etaF(d*(α+β*(α <= 1 ? α : α-2))/2)*(α+β*(α <= 1 ? α : α-2)) ) ))), Δ, mAst, f)
-  LocStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Int,f::Function) = LocStableMeander(α,β,d,δ,γ,κ,Δ,12,f)
+  LocStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Integer,f::Function) = LocStableMeander(α,β,d,δ,γ,κ,Δ,12,f)
   LocStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,f::Function) = LocStableMeander(α,β,d,δ,γ,κ,
     Int(ceil(33*log(2)/log(gamma(1+1/α+(1+β*(α <= 1 ? 1 : (α-2)/α))/2)/(gamma(1+1/α)*gamma(1+(1+β*(α <= 1 ? 1 : (α-2)/α))/2))))),f)
   LocStableMeander(α::Real,β::Real,d::Real,δ::Real,γ::Real,f::Function) = LocStableMeander(α,β,d,δ,γ,4,f)
@@ -483,11 +483,11 @@ struct LocStableMeander <: Distribution{Multivariate,Continuous}
   LocStableMeander(α::Real,β::Real,f::Function) = LocStableMeander(α,β,(2/3)*2/(α+β*(α <= 1 ? α : α-2)),(1/3)*2/(α+β*(α <= 1 ? α : α-2)),.95*α,f)
 end
 
-function local_sampler(d::StableMeander,dr::Real,δ::Real,γ::Real,κ::Real,Δ::Int,mAst::Int,f::Function)
+function local_sampler(d::StableMeander,dr::Real,δ::Real,γ::Real,κ::Real,Δ::Integer,mAst::Integer,f::Function)
   return LocStableMeander(d.α,d.β,dr,δ,γ,κ,Δ,mAst,f)
 end
 
-function local_sampler(d::StableMeander,dr::Real,δ::Real,γ::Real,κ::Real,Δ::Int,f::Function)
+function local_sampler(d::StableMeander,dr::Real,δ::Real,γ::Real,κ::Real,Δ::Integer,f::Function)
   return LocStableMeander(d.α,d.β,dr,δ,γ,κ,Δ,f)
 end
 
@@ -706,7 +706,7 @@ struct PreciseMvStableMeander <: Sampleable{Multivariate,Continuous}
   mAst_l::Int64
   mAst_r::Int64
   ε::Float64
-  PreciseMvStableMeander(α::Real,β::Real,t::Array{Real,1},d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Int,Δ_r::Int,mAst_l::Int,mAst_r::Int,ε::Real) =
+  PreciseMvStableMeander(α::Real,β::Real,t::Array{Real,1},d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Integer,Δ_r::Integer,mAst_l::Integer,mAst_r::Integer,ε::Real) =
     ( β<-1 || β>1 || (β==-1 && α<=1) || α<=0 || α>2 ) ?
     error("Parameters' requirements unmet: (α,β)∈(0,2]×[-1,1]-(0,1]×{-1}") :
     (β == 1 && α <= 1) ? MvStableMeander(α,1,t) :
@@ -724,8 +724,8 @@ struct PreciseMvStableMeander <: Sampleable{Multivariate,Continuous}
       κ_l + Int(ceil(max(2/(α-β*(α <= 1 ? α : α-2)),log(2)*2/(3*etaF(d_l*(α-β*(α <= 1 ? α : α-2))/2)*(α-β*(α <= 1 ? α : α-2)) ) ))),
       κ_r + Int(ceil(max(2/(α+β*(α <= 1 ? α : α-2)),log(2)*2/(3*etaF(d_r*(α+β*(α <= 1 ? α : α-2))/2)*(α+β*(α <= 1 ? α : α-2)) ) ))),
       Δ_l, Δ_r, mAst_l, mAst_r, ε)
-  PreciseMvStableMeander(α::Real,β::Real,t::Array{Real,1},d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Int,Δ_r::Int,mAst_l::Int,mAst_r::Int) = PreciseMvStableMeander(α,β,t,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,Δ_l,Δ_r,mAst_l,mAst_r,.5^16)
-  PreciseMvStableMeander(α::Real,β::Real,t::Array{Real,1},d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Int,Δ_r::Int) = PreciseMvStableMeander(α,β,t,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,Δ_l,Δ_r,12,12)
+  PreciseMvStableMeander(α::Real,β::Real,t::Array{Real,1},d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Integer,Δ_r::Integer,mAst_l::Integer,mAst_r::Integer) = PreciseMvStableMeander(α,β,t,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,Δ_l,Δ_r,mAst_l,mAst_r,.5^16)
+  PreciseMvStableMeander(α::Real,β::Real,t::Array{Real,1},d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Integer,Δ_r::Integer) = PreciseMvStableMeander(α,β,t,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,Δ_l,Δ_r,12,12)
   PreciseMvStableMeander(α::Real,β::Real,t::Array{Real,1},d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real) = PreciseMvStableMeander(α,β,t,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,
     Int(ceil(17*log(2)/log(gamma(1+1/α+(1-β*(α <= 1 ? 1 : (α-2)/α))/2)/(gamma(1+1/α)*gamma(1+(1-β*(α <= 1 ? 1 : (α-2)/α))/2))))),
     Int(ceil(17*log(2)/log(gamma(1+1/α+(1+β*(α <= 1 ? 1 : (α-2)/α))/2)/(gamma(1+1/α)*gamma(1+(1+β*(α <= 1 ? 1 : (α-2)/α))/2))))))
@@ -741,15 +741,15 @@ struct PreciseMvStableMeander <: Sampleable{Multivariate,Continuous}
     Int(ceil(abs(log(ε/2))/log(gamma(1+1/α+(1+β*(α <= 1 ? 1 : (α-2)/α))/2)/(gamma(1+1/α)*gamma(1+(1+β*(α <= 1 ? 1 : (α-2)/α))/2))))),ε)
 end
 
-function precise_sampler(d::MvStableMeander,d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Int,Δ_r::Int,mAst_l::Int,mAst_r::Int,ε::Real)
+function precise_sampler(d::MvStableMeander,d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Integer,Δ_r::Integer,mAst_l::Integer,mAst_r::Integer,ε::Real)
   return PreciseMvStableMeander(d.α,d.β,d.t,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,Δ_l,Δ_r,mAst_l,mAst_r,ε)
 end
 
-function precise_sampler(d::MvStableMeander,d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Int,Δ_r::Int,mAst_l::Int,mAst_r::Int)
+function precise_sampler(d::MvStableMeander,d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Integer,Δ_r::Integer,mAst_l::Integer,mAst_r::Integer)
   return PreciseMvStableMeander(d.α,d.β,d.t,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,Δ_l,Δ_r,mAst_l,mAst_r)
 end
 
-function precise_sampler(d::MvStableMeander,d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Int,Δ_r::Int)
+function precise_sampler(d::MvStableMeander,d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Integer,Δ_r::Integer)
   return PreciseMvStableMeander(d.α,d.β,d.t,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,Δ_l,Δ_r)
 end
 
@@ -1080,7 +1080,7 @@ struct LocMvStableMeander <: Sampleable{Multivariate,Continuous}
   mAst_l::Int64
   mAst_r::Int64
   f::Function
-  LocMvStableMeander(α::Real,β::Real,t::Array{Real,1},d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Int,Δ_r::Int,mAst_l::Int,mAst_r::Int,f::Function) =
+  LocMvStableMeander(α::Real,β::Real,t::Array{Real,1},d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Integer,Δ_r::Integer,mAst_l::Integer,mAst_r::Integer,f::Function) =
     ( β<-1 || β>1 || (β==-1 && α<=1) || α<=0 || α>2 ) ?
     error("Parameters' requirements unmet: (α,β)∈(0,2]×[-1,1]-(0,1]×{-1}") :
     #(β == 1 && α <= 1) ? MvStableMeander(α,1,t) :
@@ -1097,8 +1097,8 @@ struct LocMvStableMeander <: Sampleable{Multivariate,Continuous}
       κ_l + Int(ceil(max(2/(α-β*(α <= 1 ? α : α-2)),log(2)*2/(3*etaF(d_l*(α-β*(α <= 1 ? α : α-2))/2)*(α-β*(α <= 1 ? α : α-2)) ) ))),
       κ_r + Int(ceil(max(2/(α+β*(α <= 1 ? α : α-2)),log(2)*2/(3*etaF(d_r*(α+β*(α <= 1 ? α : α-2))/2)*(α+β*(α <= 1 ? α : α-2)) ) ))),
       Δ_l, Δ_r, mAst_l, mAst_r, f)
-  LocMvStableMeander(α::Real,β::Real,t::Array{Real,1},d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Int,Δ_r::Int,mAst_l::Int,mAst_r::Int,f::Function) = LocMvStableMeander(α,β,t,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,Δ_l,Δ_r,mAst_l,mAst_r,.5^16,f)
-  LocMvStableMeander(α::Real,β::Real,t::Array{Real,1},d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Int,Δ_r::Int,f::Function) = LocMvStableMeander(α,β,t,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,Δ_l,Δ_r,12,12,f)
+  LocMvStableMeander(α::Real,β::Real,t::Array{Real,1},d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Integer,Δ_r::Integer,mAst_l::Integer,mAst_r::Integer,f::Function) = LocMvStableMeander(α,β,t,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,Δ_l,Δ_r,mAst_l,mAst_r,.5^16,f)
+  LocMvStableMeander(α::Real,β::Real,t::Array{Real,1},d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Integer,Δ_r::Integer,f::Function) = LocMvStableMeander(α,β,t,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,Δ_l,Δ_r,12,12,f)
   LocMvStableMeander(α::Real,β::Real,t::Array{Real,1},d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,f::Function) = LocMvStableMeander(α,β,t,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,
     Int(ceil(17*log(2)/log(gamma(1+1/α+(1-β*(α <= 1 ? 1 : (α-2)/α))/2)/(gamma(1+1/α)*gamma(1+(1-β*(α <= 1 ? 1 : (α-2)/α))/2))))),
     Int(ceil(17*log(2)/log(gamma(1+1/α+(1+β*(α <= 1 ? 1 : (α-2)/α))/2)/(gamma(1+1/α)*gamma(1+(1+β*(α <= 1 ? 1 : (α-2)/α))/2))))))
@@ -1111,11 +1111,11 @@ struct LocMvStableMeander <: Sampleable{Multivariate,Continuous}
     (1/3)*2/(α-β*(α <= 1 ? α : α-2)),(1/3)*2/(α+β*(α <= 1 ? α : α-2)),.95*α,.95*α,4,4,Δ_l,Δ_r,12,12,f)
 end
 
-function local_sampler(d::MvStableMeander,d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Int,Δ_r::Int,mAst_l::Int,mAst_r::Int,f::Function)
+function local_sampler(d::MvStableMeander,d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Integer,Δ_r::Integer,mAst_l::Integer,mAst_r::Integer,f::Function)
   return LocMvStableMeander(d.α,d.β,d.t,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,Δ_l,Δ_r,mAst_l,mAst_r,f)
 end
 
-function local_sampler(d::MvStableMeander,d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Int,Δ_r::Int,f::Function)
+function local_sampler(d::MvStableMeander,d_l::Real,d_r::Real,δ_l::Real,δ_r::Real,γ_l::Real,γ_r::Real,κ_l::Real,κ_r::Real,Δ_l::Integer,Δ_r::Integer,f::Function)
   return LocMvStableMeander(d.α,d.β,d.t,d_l,d_r,δ_l,δ_r,γ_l,γ_r,κ_l,κ_r,Δ_l,Δ_r,f)
 end
 
